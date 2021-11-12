@@ -2,7 +2,6 @@ import React from "react";
 import classNames from "classnames";
 import "components/InterviewerListItem.scss";
 
-
 export default function InterviewerListItem(props) {
   const interviewerClass = classNames("interviewers__item", {
     "interviewers__item--selected": props.selected
@@ -13,6 +12,7 @@ export default function InterviewerListItem(props) {
     <img
       className="interviewers__item-image"
       src={props.avatar}
+      // alt is for if the image does not load
       alt={props.name}
     />
     {(props.selected && props.name)}
