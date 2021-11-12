@@ -1,11 +1,9 @@
 import React from "react";
 import InterviewerListItem from './InterviewerListItem';
-import "components/InterviewerList.scss";
+import "./InterviewerList.scss";
 
 export default function InterviewerList(props) {
-  console.log('INTERVIEWER PROPS-----', props)
   const interviewers = props.interviewers.map(interviewer => {
-    console.log('INTERVIEWER ITEM-----', interviewer)
     return (
       <InterviewerListItem
         key={interviewer.id}
