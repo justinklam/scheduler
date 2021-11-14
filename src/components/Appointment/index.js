@@ -8,7 +8,8 @@ export default function Appointment(props) {
       return 'No Appointments'
     }
     return `Appointment at ${props.time}`
-  }
+  };
+
   return (
     <article className="appointment">
       <div>{appointmentNotice()}</div>
