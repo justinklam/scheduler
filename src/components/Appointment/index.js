@@ -19,7 +19,7 @@ export default function Appointment(props) {
     if (props.interview) {
       return (
         <Show
-          student="Justin"
+          student={props.interview.student}
           interviewer={props.interview.interviewer}
         />
       )
