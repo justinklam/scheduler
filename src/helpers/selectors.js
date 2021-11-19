@@ -1,11 +1,34 @@
-import React, { useState } from 'react';
 
-export function getAppointmentsForDay(state, day) {
+//----- Get Appointments For the specified day -----//
+function getAppointmentsForDay(state, day) {
 
   const matchDay = state.days.find(element => element.name === day);
   if (state.days.length === 0 || matchDay === undefined) {
     return [];
   }
   return matchDay.appointments.map(id => state.appointments[id]);
+};
 
-}
+//----- Get Interviews  -----//
+function getInterview(state, interview) {
+  
+  if (!interview) {
+    return null;
+  }
+  
+  const {student, interviewer} = interview;
+  const returnInterviewer = state.interviewers[interviewer];
+  
+  const interviewObj = {
+    student: student,
+    interviewer: returnInterviewer
+  };
+
+  return interviewObj;
+};
+
+//----- Export Functions  -----//
+export { 
+  getAppointmentsForDay, 
+  getInterview 
+};
