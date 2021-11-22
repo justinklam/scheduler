@@ -3,17 +3,13 @@ import './styles.scss';
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
+import useVisualMode from 'hooks/useVisualMode';
 
 
 export default function Appointment(props) {
 
-  // Unneeded?
-  // const appointmentNotice = () => {
-  //   if (!props.time) {
-  //     return 'No Appointments'
-  //   }
-  //   return `Appointment at ${props.time}`
-  // };
+  const EMPTY = "EMPTY";
+  const SHOW = "SHOW";
 
   const appointmentNotice = () => {
     if (props.interview) {
