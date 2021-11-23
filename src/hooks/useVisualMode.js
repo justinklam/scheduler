@@ -6,7 +6,6 @@ export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]);
 
   function transition(mode, replace = false) {
-
     if (!replace) {
       setMode(mode);
       const newHistory = [...history, mode];
@@ -19,7 +18,6 @@ export default function useVisualMode(initial) {
   };
 
   function back() {
-
     if (history.length <= 1) {
       return;
     }

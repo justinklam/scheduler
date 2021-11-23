@@ -20,14 +20,7 @@ export default function Application(props) {
   console.log('interviewers -----', state.interviewers)
 
   const setDay = day => setState({ ...state, day });
-
-  // useEffect(() => {
-  //   axios.get("http://localhost:8001/api/days")
-  //     .then(response => {
-  //       setDays(response.data)
-  //     });
-  // },[]);
-
+  
   useEffect(() => {
     Promise.all([
       axios.get("http://localhost:8001/api/days"),
