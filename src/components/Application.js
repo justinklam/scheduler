@@ -16,8 +16,8 @@ export default function Application(props) {
   });
 
   const appointmentInfo = getAppointmentsForDay(state, state.day);
-  console.log('appointmentInfo -----', appointmentInfo)
-  console.log('interviewers -----', state.interviewers)
+  // console.log('appointmentInfo -----', appointmentInfo)
+  // console.log('interviewers -----', state.interviewers)
 
   const interviewerInfo = getInterviewersForDay(state, state.day);
 
@@ -36,19 +36,42 @@ export default function Application(props) {
   },[])
 
   function bookInterview(id, interview) {
-    console.log('bookInterview------', id, interview);
+    // replace that specific interview with the new state.appointments[id] interview
+    // reusing old data for everything else except interview
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+      // ... to reuse the old ones
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    // calling useState, spread previous state and replacing appointments only with it
+    setState({
+      ...state,
+      appointments
+    })
   };
 
   const scheduleInfo = appointmentInfo.map(appointment => {
-    // Unused
     const interview = getInterview(state, appointment.interview);
+    // console.log('scheduleInfo - interview', interview);
+    // console.log('scheduleInfo - appointment', appointment);
+
+    const newAppointment = {
+      ...appointment,
+      interview
+    };
 
     return (
       <Appointment
-        key={appointment.id}
+        key={newAppointment.id}
         interviewers={interviewerInfo}
         bookInterview={bookInterview}
-        {...appointment}
+        {...newAppointment}
       />
     );
   });
