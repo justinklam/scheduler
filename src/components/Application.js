@@ -35,15 +35,20 @@ export default function Application(props) {
     });
   },[])
 
+  function bookInterview(id, interview) {
+    console.log('bookInterview------', id, interview);
+  };
+
   const scheduleInfo = appointmentInfo.map(appointment => {
     // Unused
     const interview = getInterview(state, appointment.interview);
 
     return (
       <Appointment
-        key={appointment.id} 
+        key={appointment.id}
         interviewers={interviewerInfo}
-        {...appointment} 
+        bookInterview={bookInterview}
+        {...appointment}
       />
     );
   });
