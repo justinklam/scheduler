@@ -35,14 +35,17 @@ export default function Application(props) {
     });
   },[])
 
-  function bookInterview(id, interview) {
+  function bookInterview(id, interview, onSuccess) {
     // replace that specific interview with the new state.appointments[id] interview
     // reusing old data for everything else except interview
+
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
-      // ... to reuse the old ones
     };
+
+    // console.log('bookAppointment-----appointment', appointment);
+    // console.log('bookAppointment-----ID', id);
 
     const appointments = {
       ...state.appointments,
@@ -50,15 +53,31 @@ export default function Application(props) {
     };
 
     // calling useState, spread previous state and replacing appointments only with it
-    setState({
-      ...state,
-      appointments
-    })
+    // setState({
+    //   ...state,
+    //   appointments
+    // })
+
+    // console.log('bookInterview-----interviewStudent', interview.student);
+    // console.log('bookInterview-----interviewInterviewer', interview.interviewer);
+
+    axios.put(`http://localhost:8001/api/appointments/${appointment.id}`, appointment)
+      .then(response => {
+        // console.log('AXIOS-response-----RESPONSEONLY', response)
+        setState({...state, appointments})
+        onSuccess()
+      })
+      .catch(error => {
+        // console.log('AXIOS-response-----appointmentID', appointment.id)
+        console.log('PUT ERROR-----', error)
+      })
   };
 
   const scheduleInfo = appointmentInfo.map(appointment => {
-    const interview = getInterview(state, appointment.interview);
     // console.log('scheduleInfo - interview', interview);
+    console.log('scheduleInfo - state', state);
+
+    const interview = getInterview(state, appointment.interview);
     // console.log('scheduleInfo - appointment', appointment);
 
     const newAppointment = {
