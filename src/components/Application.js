@@ -17,7 +17,6 @@ export default function Application(props) {
 
   const appointmentInfo = getAppointmentsForDay(state, state.day);
 
-  const interviewerInfo = getInterviewersForDay(state, state.day);
 
   const setDay = day => setState({ ...state, day });
   
@@ -32,7 +31,7 @@ export default function Application(props) {
     });
   },[])
 
-  const bookInterview = function(id, interview, onSuccess) {
+  const bookInterview = function(id, interview) {
     // replace that specific interview with the new state.appointments[id] interview
     // reusing old data for everything else except interview
 
@@ -57,15 +56,10 @@ export default function Application(props) {
 
     // console.log('bookInterview-----interviewStudent', interview.student);
     // console.log('bookInterview-----interviewInterviewer', interview.interviewer);
-
-    axios.put(`http://localhost:8001/api/appointments/${appointment.id}`, appointment)
+    
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(response => {
-        // console.log('AXIOS-response-----RESPONSEONLY', response)
         setState({...state, appointments})
-        onSuccess()
-      })
-      .catch(error => {
-        console.log('PUT ERROR-----', error)
       })
   };
 
@@ -74,27 +68,39 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: null
     };
-    console.log ('cancelINterview - appointment', appointment)
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then(response => {
+        setState({...state, appointments})
+      })
   };
 
   const scheduleInfo = appointmentInfo.map(appointment => {
     // console.log('scheduleInfo - interview', interview);
     // console.log('scheduleInfo - state', state);
+    const interviewerInfo = getInterviewersForDay(state, state.day);
 
     const interview = getInterview(state, appointment.interview);
     // console.log('scheduleInfo - appointment', appointment);
 
-    const newAppointment = {
-      ...appointment,
-      interview
-    };
+    // const newAppointment = {
+    //   ...appointment,
+    //   interview
+    // };
 
     return (
       <Appointment
-        key={newAppointment.id}
+        key={appointment.id}
+        {...appointment}
+        interview={interview}
         interviewers={interviewerInfo}
         bookInterview={bookInterview}
-        {...newAppointment}
+        cancelInterview={cancelInterview}
       />
     );
   });
