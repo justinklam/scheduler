@@ -11,6 +11,7 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETE = "DELETE";
 
 export default function Appointment(props) {
   // console.log('APPOINTMENT PROPS-----', props);
@@ -21,7 +22,7 @@ export default function Appointment(props) {
     transition(SHOW);
   }
   
-  function save(name, interviewer) {
+  const save = function(name, interviewer) {
     const interview = {
       student: name,
       interviewer
@@ -34,6 +35,10 @@ export default function Appointment(props) {
     // transition(SHOW);
   };
 
+  const deleteAppointment = function(id) {
+    props.cancelInterview(id);
+  }
+
   return (
     <article className="appointment">
       <Header
@@ -44,6 +49,7 @@ export default function Appointment(props) {
       <Show
         student={props.interview.student}
         interviewer={props.interview.interviewer}
+        onDelete={deleteAppointment}
       />)}
     {mode === CREATE && (
       <Form

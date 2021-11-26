@@ -16,8 +16,6 @@ export default function Application(props) {
   });
 
   const appointmentInfo = getAppointmentsForDay(state, state.day);
-  // console.log('appointmentInfo -----', appointmentInfo)
-  // console.log('interviewers -----', state.interviewers)
 
   const interviewerInfo = getInterviewersForDay(state, state.day);
 
@@ -30,12 +28,11 @@ export default function Application(props) {
       axios.get("http://localhost:8001/api/interviewers")
     ])
     .then((all) => {
-      // console.log('response-----', all);
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
     });
   },[])
 
-  function bookInterview(id, interview, onSuccess) {
+  const bookInterview = function(id, interview, onSuccess) {
     // replace that specific interview with the new state.appointments[id] interview
     // reusing old data for everything else except interview
 
@@ -68,14 +65,21 @@ export default function Application(props) {
         onSuccess()
       })
       .catch(error => {
-        // console.log('AXIOS-response-----appointmentID', appointment.id)
         console.log('PUT ERROR-----', error)
       })
   };
 
+  const cancelInterview = function(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    console.log ('cancelINterview - appointment', appointment)
+  };
+
   const scheduleInfo = appointmentInfo.map(appointment => {
     // console.log('scheduleInfo - interview', interview);
-    console.log('scheduleInfo - state', state);
+    // console.log('scheduleInfo - state', state);
 
     const interview = getInterview(state, appointment.interview);
     // console.log('scheduleInfo - appointment', appointment);
