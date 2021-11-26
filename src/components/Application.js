@@ -16,7 +16,7 @@ export default function Application(props) {
   });
 
   const appointmentInfo = getAppointmentsForDay(state, state.day);
-
+  const interviewerInfo = getInterviewersForDay(state, state.day);
 
   const setDay = day => setState({ ...state, day });
   
@@ -81,11 +81,11 @@ export default function Application(props) {
   };
 
   const scheduleInfo = appointmentInfo.map(appointment => {
+    const interview = getInterview(state, appointment.interview);
+    const interviewerInfo = getInterviewersForDay(state, state.day);
+    
     // console.log('scheduleInfo - interview', interview);
     // console.log('scheduleInfo - state', state);
-    const interviewerInfo = getInterviewersForDay(state, state.day);
-
-    const interview = getInterview(state, appointment.interview);
     // console.log('scheduleInfo - appointment', appointment);
 
     // const newAppointment = {
