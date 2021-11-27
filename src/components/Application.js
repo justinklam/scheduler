@@ -55,6 +55,8 @@ export default function Application(props) {
         setState({...state, appointments})
         // calling useState, spread previous state and replacing appointments only with it
       })
+      .catch(error => {
+      })
   };
 
   const cancelInterview = function(id) {
@@ -71,6 +73,8 @@ export default function Application(props) {
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(response => {
         setState({...state, appointments})
+      })
+      .catch(error => {
       })
   };
 

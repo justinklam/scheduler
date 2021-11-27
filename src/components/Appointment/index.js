@@ -16,8 +16,9 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_INPUT = "ERROR_INPUT";
 const ERROR_SAVE = "ERROR_SAVE";
-
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   // console.log('APPOINTMENT PROPS-----', props);
@@ -31,7 +32,7 @@ export default function Appointment(props) {
     };
 
     if (!interviewer || !name) {
-      transition(ERROR_SAVE)
+      transition(ERROR_INPUT)
       return;
     }
 
@@ -87,7 +88,7 @@ export default function Appointment(props) {
         student={props.interview.student}
         interviewer={props.interview.interviewer.id}
       />)}
-    {mode === ERROR_SAVE && (
+    {mode === ERROR_INPUT && (
       <Error 
         message="Missing Field"
         onClose={back}
