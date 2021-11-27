@@ -6,7 +6,7 @@ export default function useApplicationData(props) {
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers: {}
+    interviewers: {},
   });
 
   useEffect(() => {
@@ -16,10 +16,21 @@ export default function useApplicationData(props) {
       axios.get("http://localhost:8001/api/interviewers")
     ])
     .then((all) => {
-      console.log('useEFFECT ALL', all);
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
     });
   },[])
+
+  const spotUpdate = function(value) {
+    const daysCopy = [];
+    for (let currentDay of state.days) {
+      if (currentDay.name === state.day) {
+        daysCopy.push({...currentDay, spots: currentDay.spots + (value)})
+      } else {
+        daysCopy.push(currentDay)
+      }
+    }
+    return daysCopy;
+  };
 
   const setDay = day => setState({ ...state, day });
 
@@ -38,7 +49,7 @@ export default function useApplicationData(props) {
     
     return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(response => {
-        setState({...state, appointments})
+        setState({...state, appointments, days: spotUpdate(-1)})
         // calling useState, spread previous state and replacing appointments only with it
       })
       .catch(error => {
@@ -59,7 +70,7 @@ export default function useApplicationData(props) {
 
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(response => {
-        setState({...state, appointments})
+        setState({...state, appointments, days: spotUpdate(1)})
       })
       .catch(error => {
         throw error;
