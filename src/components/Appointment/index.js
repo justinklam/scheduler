@@ -42,6 +42,9 @@ export default function Appointment(props) {
       .then(() => {
         transition(SHOW);
       })
+      .catch(() => {
+        transition(ERROR_SAVE);
+      })
   };
 
   const deleteAppointment = function() {
@@ -50,6 +53,9 @@ export default function Appointment(props) {
     props.cancelInterview(props.id)
       .then(() => {
         transition(EMPTY);
+      })
+      .catch(() => {
+        transition(ERROR_DELETE, true);
       })
   };
 
@@ -91,6 +97,16 @@ export default function Appointment(props) {
     {mode === ERROR_INPUT && (
       <Error 
         message="Missing Field"
+        onClose={back}
+      />)}
+    {mode === ERROR_SAVE && (
+      <Error 
+        message="Error saving appointment"
+        onClose={back}
+      />)}
+    {mode === ERROR_DELETE && (
+      <Error 
+        message="Error deleting appointment"
         onClose={back}
       />)}
     </article>

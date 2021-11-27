@@ -56,6 +56,7 @@ export default function Application(props) {
         // calling useState, spread previous state and replacing appointments only with it
       })
       .catch(error => {
+        throw error;
       })
   };
 
@@ -75,6 +76,7 @@ export default function Application(props) {
         setState({...state, appointments})
       })
       .catch(error => {
+        throw error;
       })
   };
 
