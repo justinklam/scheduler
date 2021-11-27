@@ -16,7 +16,7 @@ export default function Application(props) {
   });
 
   const appointmentInfo = getAppointmentsForDay(state, state.day);
-  const interviewerInfo = getInterviewersForDay(state, state.day);
+  // const interviewerInfo = getInterviewersForDay(state, state.day);
 
   const setDay = day => setState({ ...state, day });
   
@@ -34,7 +34,6 @@ export default function Application(props) {
   const bookInterview = function(id, interview) {
     // replace that specific interview with the new state.appointments[id] interview
     // reusing old data for everything else except interview
-
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -48,18 +47,13 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    // calling useState, spread previous state and replacing appointments only with it
-    // setState({
-    //   ...state,
-    //   appointments
-    // })
-
     // console.log('bookInterview-----interviewStudent', interview.student);
     // console.log('bookInterview-----interviewInterviewer', interview.interviewer);
     
     return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(response => {
         setState({...state, appointments})
+        // calling useState, spread previous state and replacing appointments only with it
       })
   };
 
@@ -87,11 +81,6 @@ export default function Application(props) {
     // console.log('scheduleInfo - interview', interview);
     // console.log('scheduleInfo - state', state);
     // console.log('scheduleInfo - appointment', appointment);
-
-    // const newAppointment = {
-    //   ...appointment,
-    //   interview
-    // };
 
     return (
       <Appointment
