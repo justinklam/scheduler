@@ -43,7 +43,7 @@ export default function Appointment(props) {
         transition(SHOW);
       })
       .catch(() => {
-        transition(ERROR_SAVE);
+        transition(ERROR_SAVE, true);
       })
   };
 
@@ -96,7 +96,7 @@ export default function Appointment(props) {
       />)}
     {mode === ERROR_INPUT && (
       <Error 
-        message="Missing Field"
+        message="Missing field"
         onClose={back}
       />)}
     {mode === ERROR_SAVE && (
