@@ -26,6 +26,8 @@ export default function Form(props) {
             type="text"
             placeholder="Enter Student Name"
             onChange={(event) => setStudent(event.target.value)}
+            // specifying value(text input) so that React is response instead of html
+            value={student}
           />
         </form>
         <InterviewerList
