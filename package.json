@@ -1,7 +1,15 @@
 {
-  "name": "scheduler",
-  "version": "0.1.0",
+  "name": "@justinl/scheduler",
+  "version": "1.0.0",
+  "description": "A Scheduler app by Lighthouse Labs for web bootcamp students to develop React skills",
   "private": true,
+  "author": "Justin Lam",
+  "url": "https://github.com/justinklam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justinklam/scheduler/issues"
+  },
+  "homepage": "https://github.com/justinklam/scheduler",
   "dependencies": {
     "axios": "^0.24.0",
     "classnames": "^2.2.6",
