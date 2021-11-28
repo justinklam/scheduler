@@ -5,6 +5,13 @@ This project was created and published by Justin Lam (https://github.com/justink
 
 WARNING: It is not intended for use in production-grade software.
 
+## Final Product
+
+![main](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/MainPage.png)
+![appointment](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/Appointment.png)
+![delete](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/Delete.png)
+![mobile-view](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/MediaQueries.png)
+
 ## Setup
 
 Install dependencies with `npm install`.
