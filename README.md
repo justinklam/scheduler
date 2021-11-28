@@ -9,6 +9,7 @@ WARNING: It is not intended for use in production-grade software.
 
 ![main](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/MainPage.png)
 ![appointment](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/Appointment.png)
+![saved-appointment](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/SetAppointment.png)
 ![delete](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/Delete.png)
 ![mobile-view](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/MediaQueries.png)
 
