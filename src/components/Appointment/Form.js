@@ -23,11 +23,13 @@ export default function Form(props) {
       return;
     }
 
+    // interviewer check, tests are not made to function with it
     if (interviewer === null) { 
       setError("Interviewer must be selected");
       return;
     }
   
+    setError("");
     props.onSave(student, interviewer);
   };
 
