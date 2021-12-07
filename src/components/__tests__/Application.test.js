@@ -3,6 +3,8 @@ import React from "react";
   We are rendering `<Application />` down below, so we need React.createElement
 */
 
+import axios from "axios";
+
 import { render, cleanup, waitForElement, fireEvent, prettyDOM, 
   getByText, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText } 
   from "@testing-library/react";
@@ -132,8 +134,27 @@ describe("Application", () => {
   // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
   });
 
-  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", () => {
+  it("shows the save error when failing to save an appointment", () => {
+    axios.put.mockRejectedValueOnce();
+  });
 
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", () => {
+
+    
+// We want to start by finding an existing interview.
+// With the existing interview we want to find the edit button.
+// We change the name and save the interview.
+// We don't want the spots to change for "Monday", since this is an edit.
+// Read the errors because sometimes they say that await cannot be outside of an async function.
+
+  // 1. Render the Application.
+  // 2. Wait until the text "Archie Cohen" is displayed.
+  // 3. Click the "Edit" button on the booked appointment.
+  // 4. Enter the name "Alyx Vance" into the input with the placeholder "Enter Student Name".
+  // 5. Click the "Save" button on the confirmation.
+  // 6. Check that the element with the text "Saving" is displayed.
+  // 7. Wait until the element with the "Edit" button is displayed.
+  // 8. Check that the DayListItem with the text "Monday" has a student with the name Alyx Vance saved in an appointment.
   });
 
   xit("shows the save error when failing to save an appointment", () => {
