@@ -157,17 +157,11 @@ describe("Application", () => {
     
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
     
-    console.log(prettyDOM(container));
+    // console.log(prettyDOM(container));
     await waitForElement(() => getByAltText(appointment, "Close"));
 
     const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
     expect(getByText(day, "1 spot remaining"));
-    
-// We want to start by finding an existing interview.
-// With the existing interview we want to find the edit button.
-// We change the name and save the interview.
-// We don't want the spots to change for "Monday", since this is an edit.
-// Read the errors because sometimes they say that await cannot be outside of an async function.
 
   // 1. Render the Application.
   // 2. Wait until the text "Archie Cohen" is displayed.
@@ -179,11 +173,55 @@ describe("Application", () => {
   // 8. Check that the DayListItem with the text "Monday" has the same "1 spot remaining"
   });
 
-  xit("shows the save error when failing to save an appointment", () => {
+  it("shows the save error when failing to save an appointment", async() => {
+    const { container, debug } = render(<Application />);
+  
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+  
+    const appointments = getAllByTestId(container, "appointment");
+    const appointment = appointments[0];
+  
+    fireEvent.click(getByAltText(appointment, "Add"));
+    
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+        target: { value: "Alyx Vance" }
+      });
+      
+    axios.put.mockRejectedValueOnce();
+    fireEvent.click(getByText(appointment, "Save"));
+
+    expect(getByText(container, "Interviewer must be selected")).toBeInTheDocument();
+
+    // console.log(prettyDOM(container));
 
   });
 
-  xit("shows the delete error when failing to delete an existing appointment", () => {
+  it("shows the delete error when failing to delete an existing appointment", async() => {
+    axios.delete.mockRejectedValueOnce();
+    const { container, debug } = render(<Application />);
+
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+  
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+
+    expect(getByText(appointment, "Are you sure you want to delete?")).toBeInTheDocument();
+
+    fireEvent.click(getByText(appointment, "Confirm"));
+    
+    expect(getByText(appointment, "DELETING")).toBeInTheDocument();
+    
+    await waitForElement(() => getByText(appointment, "Error"));
+
+    expect(getByText(container, "Error deleting appointment")).toBeInTheDocument();
+
+    console.log(prettyDOM(container));
+
+    // await waitForElement(() => getByText(appointment, "Error"));
+    // expect(getByText(appointment, "There was an error deleting your interview.")).toBeInTheDocument();
 
   });
 
