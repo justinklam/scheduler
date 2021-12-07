@@ -138,8 +138,30 @@ describe("Application", () => {
     axios.put.mockRejectedValueOnce();
   });
 
-  it("loads data, edits an interview and keeps the spots remaining for Monday the same", () => {
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async() => {
+    const { container, debug } = render(<Application />);
 
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    
+    fireEvent.click(queryByAltText(appointment, "Edit"));
+    
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Alyx Vance" }
+    });
+    
+    fireEvent.click(getByText(appointment, "Save"));
+    
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+    
+    console.log(prettyDOM(container));
+    await waitForElement(() => getByAltText(appointment, "Close"));
+
+    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
+    expect(getByText(day, "1 spot remaining"));
     
 // We want to start by finding an existing interview.
 // With the existing interview we want to find the edit button.
@@ -153,8 +175,8 @@ describe("Application", () => {
   // 4. Enter the name "Alyx Vance" into the input with the placeholder "Enter Student Name".
   // 5. Click the "Save" button on the confirmation.
   // 6. Check that the element with the text "Saving" is displayed.
-  // 7. Wait until the element with the "Edit" button is displayed.
-  // 8. Check that the DayListItem with the text "Monday" has a student with the name Alyx Vance saved in an appointment.
+  // 7. Wait until the element with the "Close" button is displayed.
+  // 8. Check that the DayListItem with the text "Monday" has the same "1 spot remaining"
   });
 
   xit("shows the save error when failing to save an appointment", () => {
