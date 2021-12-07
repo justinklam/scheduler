@@ -4,7 +4,7 @@ import React from "react";
 */
 
 import { render, cleanup, waitForElement, fireEvent, prettyDOM, 
-  getByText, getAllByTestId, getByAltText, getByPlaceholderText, queryByText } 
+  getByText, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText } 
   from "@testing-library/react";
 /*
   We import our helper functions from the react-testing-library
@@ -84,7 +84,7 @@ describe("Application", () => {
     
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
     
-    const day = getAllByTestId(container, "day").find(element => queryByText(element, "Monday"));
+    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
     expect(getByText(day, "no spots remaining"));
 
   
@@ -97,11 +97,42 @@ describe("Application", () => {
     // 9. Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
   });
 
-  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", () => {
-    const { container } = render(<Application />);
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    const { container, debug } = render(<Application />);
+
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+  
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+
+    expect(getByText(appointment, "Are you sure you want to delete?")).toBeInTheDocument();
+
+    fireEvent.click(getByText(appointment, "Confirm"));
+
+    expect(getByText(appointment, "DELETING")).toBeInTheDocument();
+
+    await waitForElement(() => getByAltText(appointment, "Add"));
+
+    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
+    expect(getByText(day, "2 spots remaining"));
 
     // console.log(prettyDOM(container));
+    // console.log(prettyDOM(debug));
 
+  // 1. Render the Application.
+  // 2. Wait until the text "Archie Cohen" is displayed.
+  // 3. Click the "Delete" button on the booked appointment.
+  // 4. Check that the confirmation message is shown.
+  // 5. Click the "Confirm" button on the confirmation.
+  // 6. Check that the element with the text "Deleting" is displayed.
+  // 7. Wait until the element with the "Add" button is displayed.
+  // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
+  });
+
+  xit("loads data, edits an interview and keeps the spots remaining for Monday the same", () => {
 
   });
 

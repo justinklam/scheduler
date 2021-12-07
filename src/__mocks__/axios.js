@@ -89,6 +89,14 @@ export default {
       statusText: 'OK',    
       data: 'No Response',
     });
+  }),
+
+  delete: jest.fn(() => {
+    return Promise.resolve({
+      status: 204,    
+      statusText: 'OK',    
+      data: 'No Response',
+    });
   })
 
 };
