@@ -17,6 +17,13 @@ WARNING: It is not intended for use in production-grade software.
 
 Install dependencies with `npm install`.
 
+* Download the Scheduler Server API from the below link
+* https://github.com/justinklam/scheduler-api
+
+```sh
+npm start
+```
+
 ## Running Webpack Development Server
 
 ```sh
@@ -27,6 +34,12 @@ npm start
 
 ```sh
 npm test
+```
+
+## Running Storybook Visual Testbed
+
+```sh
+npm run storybook
 ```
 
 ## Running Storybook Visual Testbed
