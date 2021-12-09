@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.scss';
 import Header from './Header';
 import Show from './Show';
@@ -23,6 +23,7 @@ export default function Appointment(props) {
   // console.log('APPOINTMENT PROPS-----', props);
 
   const {mode, transition, back} = useVisualMode(props.interview ? SHOW : EMPTY);
+  const [editing, setEditing] = useState(false);
   
   const save = function(name, interviewer) {
     const interview = {
@@ -32,7 +33,7 @@ export default function Appointment(props) {
 
     transition(SAVING);
 
-    props.bookInterview(props.id, interview)
+    props.bookInterview(props.id, interview, editing, setEditing)
       .then(() => {
         transition(SHOW);
       })
@@ -64,7 +65,12 @@ export default function Appointment(props) {
         student={props.interview.student}
         interviewer={props.interview.interviewer}
         onDelete={() => transition(CONFIRM)}
-        onEdit={() => transition(EDIT)}
+        onEdit={() => {
+          transition(EDIT)
+          setEditing(true)
+        }}
+        editing={editing}
+        setEditing={setEditing}
       />)}
     {mode === CREATE && (
       <Form

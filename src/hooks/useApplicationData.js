@@ -34,7 +34,7 @@ export default function useApplicationData(props) {
 
   const setDay = day => setState({ ...state, day });
 
-  const bookInterview = function(id, interview) {
+  const bookInterview = function(id, interview, editing, setEditing) {
     // replace that specific interview with the new state.appointments[id] interview
     // reusing old data for everything else except interview
     const appointment = {
@@ -46,6 +46,18 @@ export default function useApplicationData(props) {
       ...state.appointments,
       [id]: appointment
     };
+
+    if (editing) {
+      return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      .then(response => {
+        setState({...state, appointments, days: spotUpdate(0)})
+        // calling useState, spread previous state and replacing appointments only with it
+        setEditing(false);
+      })
+      .catch(error => {
+        throw error;
+      })
+    } else {
     
     return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(response => {
@@ -55,6 +67,7 @@ export default function useApplicationData(props) {
       .catch(error => {
         throw error;
       })
+    }
   };
 
   const cancelInterview = function(id) {
