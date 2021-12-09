@@ -218,11 +218,7 @@ describe("Application", () => {
 
     expect(getByText(container, "Error deleting appointment")).toBeInTheDocument();
 
-    console.log(prettyDOM(container));
-
-    // await waitForElement(() => getByText(appointment, "Error"));
-    // expect(getByText(appointment, "There was an error deleting your interview.")).toBeInTheDocument();
-
+    // console.log(prettyDOM(container));
   });
 
 });
