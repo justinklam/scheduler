@@ -21,15 +21,15 @@ export default function useApplicationData(props) {
   },[])
 
   const spotUpdate = function(value) {
-    const daysCopy = [];
+    const updatedDays = [];
     for (let currentDay of state.days) {
       if (currentDay.name === state.day) {
-        daysCopy.push({...currentDay, spots: currentDay.spots + (value)})
+        updatedDays.push({...currentDay, spots: currentDay.spots + (value)})
       } else {
-        daysCopy.push(currentDay)
+        updatedDays.push(currentDay)
       }
     }
-    return daysCopy;
+    return updatedDays;
   };
 
   const setDay = day => setState({ ...state, day });
