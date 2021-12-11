@@ -3,8 +3,8 @@ import Button from '../Button';
 import InterviewerList from '../InterviewerList';
 
 export default function Form(props) {
-  const [student, setStudent] = useState(props.student || "");
-  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [student, setStudent] = useState(props.userInputStudent || props.student || "");
+  const [interviewer, setInterviewer] = useState(props.userInputInterviewer || props.interviewer || null);
   const [error, setError] = useState("");
 
   const reset = function() {

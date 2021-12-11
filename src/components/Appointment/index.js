@@ -24,16 +24,18 @@ export default function Appointment(props) {
 
   const {mode, transition, back} = useVisualMode(props.interview ? SHOW : EMPTY);
   const [editing, setEditing] = useState(false);
+  const [userInput, setUserInput] = useState({student: "", interviewer: null});
   
   const save = function(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
+    setUserInput(interview);
 
     transition(SAVING);
 
-    props.bookInterview(props.id, interview, editing, setEditing)
+    props.bookInterview(props.id, interview, editing)
       .then(() => {
         transition(SHOW);
       })
@@ -59,7 +61,13 @@ export default function Appointment(props) {
       <Header
         time={props.time}
       />
-    {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+    {mode === EMPTY && (
+      <Empty 
+        onAdd={() => {
+          transition(CREATE)
+          setEditing(false)
+        }}
+      />)}
     {mode === SHOW && (
       <Show
         student={props.interview.student}
@@ -77,6 +85,8 @@ export default function Appointment(props) {
         interviewers={props.interviewers}
         onCancel={back}
         onSave={save}
+        userInputStudent={userInput.student}
+        userInputInterviewer={userInput.interviewer}
       />)}
     {mode === SAVING && <Status message="Saving"/>}
     {mode === DELETING && <Status message="DELETING"/>}
@@ -93,6 +103,8 @@ export default function Appointment(props) {
         onSave={save}
         student={props.interview.student}
         interviewer={props.interview.interviewer.id}
+        userInputStudent={userInput.student}
+        userInputInterviewer={userInput.interviewer}
       />)}
     {mode === ERROR_SAVE && (
       <Error 

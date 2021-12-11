@@ -34,10 +34,10 @@ export default function useApplicationData(props) {
 
   const setDay = day => setState({ ...state, day });
 
-  const bookInterview = function(id, interview, editing, setEditing) {
-    // replace that specific interview with the new state.appointments[id] interview
-    // reusing old data for everything else except interview
+  const bookInterview = function(id, interview, editing) {
     const appointment = {
+      // replace that specific interview with the new state.appointments[id] interview
+      // reusing old data for everything else except interview
       ...state.appointments[id],
       interview: { ...interview }
     };
@@ -47,27 +47,19 @@ export default function useApplicationData(props) {
       [id]: appointment
     };
 
-    if (editing) {
-      return axios.put(`/api/appointments/${id}`, appointment)
-      .then(response => {
-        setState({...state, appointments, days: spotUpdate(0)})
-        // calling useState, spread previous state and replacing appointments only with it
-        setEditing(false);
-      })
-      .catch(error => {
-        throw error;
-      })
-    } else {
-    
-    return axios.put(`/api/appointments/${id}`, appointment)
-      .then(response => {
-        setState({...state, appointments, days: spotUpdate(-1)})
-        // calling useState, spread previous state and replacing appointments only with it
-      })
-      .catch(error => {
-        throw error;
-      })
+    let newDays = state.days;
+    if (!editing) {
+      newDays = spotUpdate(-1);
     }
+
+    return axios.put(`/api/appointments/${id}`, appointment)
+    .then(response => {
+      setState({...state, appointments, days: newDays})
+      // calling useState, spread previous state and replacing appointments only with it
+    })
+    .catch(error => {
+      throw error;
+    })
   };
 
   const cancelInterview = function(id) {
