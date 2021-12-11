@@ -42,12 +42,6 @@ npm test
 npm run storybook
 ```
 
-## Running Storybook Visual Testbed
-
-```sh
-npm run storybook
-```
-
 ## Dependencies
 
   - "axios": "^0.24.0",

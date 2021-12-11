@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 
 export default function useApplicationData(props) {
@@ -11,9 +11,9 @@ export default function useApplicationData(props) {
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://localhost:8001/api/days"),
-      axios.get("http://localhost:8001/api/appointments"),
-      axios.get("http://localhost:8001/api/interviewers")
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers")
     ])
     .then((all) => {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
@@ -48,7 +48,7 @@ export default function useApplicationData(props) {
     };
 
     if (editing) {
-      return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
+      return axios.put(`/api/appointments/${id}`, appointment)
       .then(response => {
         setState({...state, appointments, days: spotUpdate(0)})
         // calling useState, spread previous state and replacing appointments only with it
@@ -59,7 +59,7 @@ export default function useApplicationData(props) {
       })
     } else {
     
-    return axios.put(`http://localhost:8001/api/appointments/${id}`, appointment)
+    return axios.put(`/api/appointments/${id}`, appointment)
       .then(response => {
         setState({...state, appointments, days: spotUpdate(-1)})
         // calling useState, spread previous state and replacing appointments only with it
@@ -81,7 +81,7 @@ export default function useApplicationData(props) {
       [id]: appointment
     };
 
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+    return axios.delete(`/api/appointments/${id}`)
       .then(response => {
         setState({...state, appointments, days: spotUpdate(1)})
       })
