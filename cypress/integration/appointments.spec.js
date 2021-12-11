@@ -26,7 +26,25 @@ describe("appointments", () => {
     cy.contains(".appointment__card--show", "Lydia Miller-Jones");
     cy.contains(".appointment__card--show", "Sylvia Palmer");
 
-  
+  });
+
+  it("should edit an interview", () => {
+
+    cy.get("[alt=Edit]")
+    .first()
+    .click({ force: true });
+
+    cy.get("[data-testid='student-name-input']").clear()
+      .type("Alyx Vance");
+
+    cy.get("[alt='Tori Malcolm']")
+      .click();
+    
+    cy.contains("Save").click();
+
+    cy.contains(".appointment__card--show", "Alyx Vance");
+    cy.contains(".appointment__card--show", "Tori Malcolm");
+
   });
 
   // find the add button in the second appointment slot.
