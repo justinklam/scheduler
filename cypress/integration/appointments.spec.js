@@ -8,7 +8,7 @@ describe("appointments", () => {
     cy.contains("Monday");
    });
 
-  it("should book an interview", () => {
+  xit("should book an interview", () => {
 
     cy.get("[alt=Add]")
     // finds the first Add on page, [0] is in use
@@ -28,7 +28,7 @@ describe("appointments", () => {
 
   });
 
-  it("should edit an interview", () => {
+  xit("should edit an interview", () => {
 
     cy.get("[alt=Edit]")
     .first()
@@ -47,7 +47,21 @@ describe("appointments", () => {
 
   });
 
-  // find the add button in the second appointment slot.
-  // click the add button in the second appointment through alt tag
+  it("should cancel an interview", () => {
+
+    cy.get("[alt=Delete]")
+    .first()
+    .click({ force: true });
+  
+    cy.contains("Confirm")
+      .click()
+
+    // cy.contains("Deleting").should("exist");
+    cy.contains("Deleting").should("not.exist");
+  
+    cy.contains(".appointment__card--show", "Archie Cohen")
+      .should("not.exist");
+
+  });
 
 });
