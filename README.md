@@ -7,10 +7,15 @@ WARNING: It is not intended for use in production-grade software.
 
 ## Final Product
 
+### Main
 ![main](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/MainPage.png)
+### Appointment
 ![appointment](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/Appointment.png)
+### Saved Appointment
 ![saved-appointment](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/SetAppointment.png)
+### Delete Confirmation
 ![delete](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/Delete.png)
+### Mobile View
 ![mobile-view](https://raw.githubusercontent.com/justinklam/scheduler/master/screenshots/MediaQueries.png)
 
 ## Setup
