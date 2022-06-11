@@ -1,11 +1,15 @@
 import React from "react";
 
+// Components
 import "components/Application.scss";
 import "components/Appointment";
 import DayList from './DayList';
 import Appointment from "components/Appointment";
 
+// Helper Functions
 import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
+
+// Hooks
 import useApplicationData from "../hooks/useApplicationData";
 
 export default function Application(props) {
