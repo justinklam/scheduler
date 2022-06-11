@@ -1,3 +1,4 @@
+//----- Helper Functions -----//
 
 //----- Get Appointments For the specified day -----//
 function getAppointmentsForDay(state, day) {
