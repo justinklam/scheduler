@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import './styles.scss';
+
+// Components
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
 import Form from './Form';
 import Status from "./Status";
-import useVisualMode from 'hooks/useVisualMode';
 import Confirm from "./Confirm";
 import Error from "./Error";
+
+// Hooks
+import useVisualMode from 'hooks/useVisualMode';
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -20,7 +24,7 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
-  // console.log('APPOINTMENT PROPS-----', props);
+  // console.log('APPOINTMENT PROPS-----', {props});
 
   const {mode, transition, back} = useVisualMode(props.interview ? SHOW : EMPTY);
   const [editing, setEditing] = useState(false);
